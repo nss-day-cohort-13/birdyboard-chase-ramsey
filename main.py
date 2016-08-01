@@ -6,6 +6,9 @@ class ChirpData:
   """
 
   def __init__(self):
+    """ When instantiated, the data saved at chirps.txt
+        will be loaded into the private variable _all_chirps
+    """
     # _all_chirps = [load from chirps.txt]
     pass
 
@@ -54,7 +57,15 @@ class Chirp:
       objects will be constructed.
   """
 
-  def __init__(self):
+  def __init__(self, text, sender, id):
+    """ On init, a chirp will get the following properties:
+        text - the actual text of the chirp
+        sender - the user who created the chirp
+        number - the unique number ID of the chirp
+    """
+    # self.text = text
+    # self.sender = sender
+    # self.id = id
     pass
 
 
@@ -64,7 +75,12 @@ class PrivateChirp(Chirp):
       private chirps.
   """
 
-  def __init__(self):
+  def __init__(self, sender, text, id, receiver):
+    """ On init, a private chirp will get all the properties of a
+        public chirp, plus a 'receiver' property.
+    """
+    # super().__init__(sender, text, id)
+    # self.receiver = receiver
     pass
 
 
@@ -116,5 +132,10 @@ class User:
       should be constructed.
   """
 
-  def __init__(self):
+  def __init__(self, username, password, id):
+    """ On init, user objects will get the following properties:
+        username - the unique username of each user profile
+        password - the password to access the user's profile
+        id - the unique ID number assigned to each user profile
+    """
     pass
