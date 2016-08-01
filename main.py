@@ -5,11 +5,14 @@ class ChirpData:
       outside.
   """
 
-  def __init__(self):
-    """ When instantiated, the data saved at chirps.txt
+  def __init__(self, file):
+    """ When instantiated, the data saved at chirps.txt (or test_chirps.txt)
         will be loaded into the private variable _all_chirps
+        Method arguments
+        ================
+        file - the file to load chirp data from
     """
-    # _all_chirps = [load from chirps.txt]
+    # _all_chirps = [load from chirps.txt / test_chirps.txt]
     pass
 
   def load_chirps(self):
@@ -85,15 +88,20 @@ class PrivateChirp(Chirp):
 
 
 class UserData:
-  """ The 'UserData' class holds the list of users retrieved
-      from user.txt and opens methods for accessing user data
+  """ The 'UserData' class holds the list of users retrieved from users.txt
+      (or test_users.txt) and opens methods for accessing user data. Also
+      includes a current user property that is set to the appropriate user
+      object after successful login.
+      Method arguments
+      ================
+      file - the file to load user data from
   """
 
-  def __init__(self):
+  def __init__(self, file):
     """ Creates a private variable called _users, loaded from a list
         of users stored in the serialized text file, users.txt
     """
-    # _users = [load from users.txt]
+    # _users = [load from users.txt / test_users.txt]
     pass
 
   def load_user_list(self):
@@ -123,6 +131,16 @@ class UserData:
         ================
         search - username associated with the user object being searched for
         password - password associated with the user object being searched for
+    """
+    pass
+
+  def set_current_user(self, username, password):
+    """ Searches for user object matching the username and password, and
+        when found, sets that user object as the current user.
+        Method arguments
+        ================
+        username - the username of the profile being searched for
+        passwoard - the password associated with the user profile
     """
     pass
 
