@@ -21,7 +21,8 @@ class TestChirpLogic(unittest.TestCase):
     self.assertTrue(chirp in self.chirp_data.chirps)
 
     # Clean up
-    self.chirp_data.chirps = self.chirp_data.chirps[:-1]
+    if len(self.chirp_data.chirps) > 1:
+      self.chirp_data.chirps = self.chirp_data.chirps[:-1]
 
   def test_create_private_chirp(self):
     chirp_text = 'This is the text of a private chirp'
@@ -35,7 +36,8 @@ class TestChirpLogic(unittest.TestCase):
     self.assertTrue(chirp in self.chirp_data.chirps)
 
     # Clean up
-    self.chirp_data.chirps = self.chirp_data.chirps[:-1]
+    if len(self.chirp_data.chirps) > 1:
+      self.chirp_data.chirps = self.chirp_data.chirps[:-1]
 
 class TestUserLogic(unittest.TestCase):
 
@@ -69,8 +71,7 @@ class TestUserLogic(unittest.TestCase):
     new['username'] = 'new_test',
     new['password'] = 'new_password',
     new['user_id'] = '00000002'
-    users = self.user_data.get_users()
-    self.assertTrue(new in users)
+    self.assertTrue(new in self.user_data.users)
 
     self.assertEqual(self.user_data.current_user['username'], 'new_test')
     self.assertEqual(self.user_data.current_user['password'], 'new_password')
@@ -78,7 +79,8 @@ class TestUserLogic(unittest.TestCase):
 
     # Clean up
     self.user_data.current_user = None
-    self.user_data.users = self.user_data.users[:-1]
+    if len(self.user_data.users) > 1:
+      self.user_data.users = self.user_data.users[:-1]
 
   class TestUserInterface:
 
