@@ -104,7 +104,7 @@ class UserData:
         of users stored in the serialized text file, users.txt
     """
     # _users = [load from users.txt / test_users.txt]
-    # self.current_user = None
+    self.current_user = None
     pass
 
   def load_user_list(self):
@@ -117,6 +117,12 @@ class UserData:
   def write_user_list(self):
     """ Handles serializing user data and writing it to
         user.txt
+        Method arguments: n/a
+    """
+    pass
+
+  def get_users(self):
+    """ Returns the private list of user data, stored as _users
         Method arguments: n/a
     """
     pass
