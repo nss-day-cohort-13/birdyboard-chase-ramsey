@@ -6,7 +6,7 @@ class TestChirpLogic(unittest.TestCase):
   @classmethod
   def setUpClass(self):
     self.chirp_data = ChirpData('test_chirps.txt')
-    sel.user_data = UserData('test_users.txt')
+    self.user_data = UserData('test_users.txt')
 
   def test_create_public_chirp(self):
     pass
@@ -56,7 +56,8 @@ class TestUserLogic(unittest.TestCase):
     @classmethod
     def setUpClass(self):
       self.chirp_data = ChirpData('test_chirps.txt')
-      sel.user_data = UserData('test_users.txt')
+      self.user_data = UserData('test_users.txt')
+      self.user_interface = UserInterface()
 
     def test_user_must_be_logged_in_to_chirp(self):
       self.assertEqual(self.user_data.current_user, None)
