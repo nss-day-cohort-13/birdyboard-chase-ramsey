@@ -102,6 +102,7 @@ class UserData:
         of users stored in the serialized text file, users.txt
     """
     # _users = [load from users.txt / test_users.txt]
+    # self.current_user = None
     pass
 
   def load_user_list(self):

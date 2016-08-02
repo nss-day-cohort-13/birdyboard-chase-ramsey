@@ -22,7 +22,10 @@ class TestUserLogic(unittest.TestCase):
     sel.user_data = UserData('test_users.txt')
 
   def test_login_sets_correct_current_user(self):
-    pass
+    self.user_data.set_current_user('test_acct', 'test_password')
+    self.assertEqual(self.user_data.current_user.username, 'test_acct')
+    self.assertEqual(self.user_data.current_user.password, 'test_password')
+    self.assertEqual(self.user_data.current_user.id, '00000001')
 
   def test_create_new_user(self):
     pass
