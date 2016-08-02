@@ -50,3 +50,14 @@ class TestUserLogic(unittest.TestCase):
     self.assertEqual(user_data.current_user.username, 'new_test')
     self.assertEqual(user_data.current_user.password, 'new_password')
     self.assertEqual(user_data.current_user.id, '00000002')
+
+  class TestUserInterface:
+
+    @classmethod
+    def setUpClass(self):
+      self.chirp_data = ChirpData('test_chirps.txt')
+      sel.user_data = UserData('test_users.txt')
+
+    def test_user_must_be_logged_in_to_chirp(self):
+      self.assertEqual(self.user_data.current_user, None)
+      self.assertRaises(Exception, self.user_interface.submit_new_chirp())

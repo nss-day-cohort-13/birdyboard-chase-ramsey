@@ -45,10 +45,12 @@ class ChirpData:
     """
     pass
 
-  def create_new(self, private=False):
+  def new_chirp(self, text, username, private=False):
     """ Method for creating a new chirp
         Method arguments
         ================
+        text - the text of the chirp
+        username - username of the person chirping
         private - set to False as default, creates a public chirp;
                   setting private to True will create a private chirp
     """
@@ -134,7 +136,9 @@ class UserData:
         that matches the search arguments passed in
         Method arguments
         ================
-        search - username associated with the user object being searched for
+        Note: find_user looks up username if only one argument, username and
+              password if two arguments
+        username - username associated with the user object being searched for
         password - password associated with the user object being searched for
     """
     pass
@@ -160,5 +164,19 @@ class User:
         username - the unique username of each user profile
         password - the password to access the user's profile
         id - the unique ID number assigned to each user profile
+    """
+    pass
+
+class UserInterface:
+  """ The 'UserInterface' class will handle taking in all user
+      input and passing it to the appropriate data class methods
+  """
+
+  def __init__(self):
+    pass
+
+  def submit_new_chirp(self):
+    """ Takes user input and submits it to create a new chirp
+        Method arguments: n/a
     """
     pass
