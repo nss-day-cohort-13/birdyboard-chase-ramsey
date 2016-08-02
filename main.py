@@ -119,9 +119,13 @@ class UserData:
     """
     pass
 
-  def new_user(self):
-    """ Creates a new user object from user input
-        Method arguments: n/a
+  def new_user(self, username, password):
+    """ Creates a new user object from user input, and sets
+        new user as current user
+        Method arguments
+        ================
+        username - new unique username chosen by user
+        password - password chosen by user to access profile
     """
     pass
 
