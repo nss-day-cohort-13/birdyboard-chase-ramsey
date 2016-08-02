@@ -16,6 +16,15 @@ class TestChirpLogic(unittest.TestCase):
 
 class TestUserLogic(unittest.TestCase):
 
+  def test_find_user_returns_true_false(self):
+    user_data = UserData('test_users.txt')
+    self.assertTrue(user_data.find_user('test_acct'))
+    self.assertFalse(user_data.find_user('chase'))
+
+    self.assertTrue(user_data.find_user('test_acct', 'test_password'))
+    self.assertFalse(user_data.find_user('test_acct', 'wrong_password'))
+    self.assertFalse(user_data.find_user('test_acct', ''))
+
   def test_login_sets_correct_current_user(self):
     user_data = UserData('test_users.txt')
 
