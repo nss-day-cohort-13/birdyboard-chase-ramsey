@@ -45,7 +45,7 @@ class ChirpData:
     """
     pass
 
-  def new_chirp(self, text, username, private=False):
+  def new_chirp(self, text, username, private=False, testing=False):
     """ Method for creating a new chirp
         Method arguments
         ================
@@ -121,7 +121,7 @@ class UserData:
     """
     pass
 
-  def new_user(self, username, password):
+  def new_user(self, username, password, testing=False):
     """ Creates a new user object from user input, and sets
         new user as current user
         Method arguments

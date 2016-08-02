@@ -11,7 +11,7 @@ class TestChirpLogic(unittest.TestCase):
 
   def test_create_public_chirp(self):
     chirp_text = 'This is the text of a public chirp'
-    self.chirp_data.new_chirp(text, self.user_data.current_user.username)
+    self.chirp_data.new_chirp(text, self.user_data.current_user.username, testing=True)
     chirp = dict()
     chirp.text = chirp_text,
     chirp.username = self.user_data.current_user.username,
@@ -25,7 +25,7 @@ class TestChirpLogic(unittest.TestCase):
 
   def test_create_private_chirp(self):
     chirp_text = 'This is the text of a public chirp'
-    self.chirp_data.new_chirp(text, self.user_data.current_user.username, private=True)
+    self.chirp_data.new_chirp(text, self.user_data.current_user.username, private=True, testing=True)
     chirp = dict()
     chirp.text = chirp_text,
     chirp.username = self.user_data.current_user.username,
@@ -68,7 +68,7 @@ class TestUserLogic(unittest.TestCase):
     self.user_data = UserData('test_users.txt')
 
     self.assertEqual(self.user_data.current_user, None)
-    self.user_data.new_user('new_test', 'new_password')
+    self.user_data.new_user('new_test', 'new_password', testing=True)
     new = dict()
     new.username = 'new_test',
     new.password = 'new_password',
