@@ -65,7 +65,7 @@ class UserData:
     """
     user = None
     for uid, profile in self.users.items():
-      if uid.username == username:
+      if profile.username == username:
         user = uid
     return user
 
