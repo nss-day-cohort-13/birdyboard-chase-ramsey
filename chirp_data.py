@@ -1,3 +1,4 @@
+import pickle
 from chirps import *
 
 class ChirpData:
@@ -14,30 +15,36 @@ class ChirpData:
         ================
         file - the file to load chirp data from
     """
-    # self.all_chirps = [load from chirps.txt / test_chirps.txt]
-    pass
+    self.load_file = file
+    self.all_chirps = self.load_chirps()
 
   def load_chirps(self):
-    """ Handles loading _all_chirps data from the
+    """ Handles loading self.all_chirps data from the
         chrips.txt file.
         Method arguments: n/a
     """
-    pass
+    with open(self.load_file, 'rb') as f:
+      return pickle.load(f)
 
   def write_chirps(self):
     """ Handles writing any changes to self.all_chirps data
         to the chirps.txt file.
         Method arguments: n/a
     """
-    pass
+    with open(self.load_file, 'wb') as f:
+      pickle.dump(self.all_chirps, f)
 
   def get_public(self):
     """ Returns all public tweets
         Method arguments: n/a
     """
-    pass
+    public = list()
+    for chirp_id, chirp in self.all_chirps.items():
+      if chirp.private == False:
+        public.append(chirp)
+    return public
 
-  def get_private(self, username):
+  def get_private(self, user_id):
     """ Returns private tweets matching the username
         provided as argument
         Method arguments
@@ -45,7 +52,16 @@ class ChirpData:
         username - the username to look for in the 'sent'
                    and 'received' categories of private chirps
     """
-    pass
+    private = list()
+    for chirp_id, chirp in self.all_chirps.items():
+      if chirp.private == True:
+        if chirp.receiver_id == user_id:
+          private.append(chirp)
+        elif chirp.sender_id == user_id:
+          private.append(chirp)
+        else:
+          pass
+    return private
 
   def new_chirp(self, text, sender_id, private=False, receiver_id=None, testing=False):
     """ Method for creating a new chirp
@@ -58,4 +74,15 @@ class ChirpData:
         receiver_id - user ID of the receiver (if private)
         testing - only set to true during testing
     """
-    pass
+    if private == False:
+      new = Chirp(test, sender_id)
+      self.all_chirps.append(new)
+    elif private == True:
+      new = PrivateChirp(test, sender_id, receiver_id)
+      self.all_chirps.append(new)
+    else:
+      pass
+    if testing == False:
+      self.write_chirps()
+    else:
+      pass
