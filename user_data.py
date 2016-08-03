@@ -1,4 +1,5 @@
 import pickle
+import uuid
 from user import *
 
 class UserData:
@@ -13,10 +14,10 @@ class UserData:
         of users stored in the serialized text file, users.txt
         Method arguments
         ================
-        file - the file to load user data from
+        file - the file to load user data from, saved at self.user_file
     """
-    # _users = [load from users.txt / test_users.txt]
-    self.users = None
+    self.user_file = file
+    self.users = self.load_user_list()
     self.current_user = None
 
   def load_user_list(self):
@@ -24,14 +25,19 @@ class UserData:
         and storing it in self.users
         Method arguments: n/a
     """
-    pass
+    try:
+      with open(self.user_file, 'rb') as f:
+        return pickle.load(f)
+    except EOFError:
+      return dict()
 
   def write_user_list(self):
     """ Handles serializing user data and writing it to
         user.txt
         Method arguments: n/a
     """
-    pass
+    with open(self.user_file, 'wb') as f:
+      pickle.dump(self.users, f)
 
   def new_user(self, full_name, username, testing=False):
     """ Creates a new user object from user input, and sets
@@ -41,16 +47,27 @@ class UserData:
         full_name - the user's full name
         username - new unique username chosen by user
     """
-    pass
+    new = User(full_name, username)
+    uid = uuid.uuid4()
+    self.users[uid] = new
+    self.set_current_user(username)
+    if testing == False:
+      self.write_user_list()
+    else:
+      pass
 
   def find_user(self, username):
-    """ Returns True/False if a user object is found in self.users
-        that matches the search argument passed in
+    """ Returns uid if a user object is found in self.users
+        that matches the username passed in. Returns None if not found.
         Method arguments
         ================
         username - username associated with the user object being searched for
     """
-    pass
+    user = None
+    for uid, profile in self.users.items():
+      if uid.username == username:
+        user = uid
+    return user
 
   def set_current_user(self, username):
     """ Searches for user object matching the username, and
@@ -59,4 +76,5 @@ class UserData:
         ================
         username - the username of the profile being searched for
     """
-    pass
+    current = self.find_user(username)
+    self.current_user = current

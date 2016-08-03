@@ -15,7 +15,7 @@ class ChirpData:
         ================
         file - the file to load chirp data from
     """
-    self.load_file = file
+    self.chirp_file = file
     self.all_chirps = self.load_chirps()
 
   def load_chirps(self):
@@ -23,15 +23,18 @@ class ChirpData:
         chrips.txt file.
         Method arguments: n/a
     """
-    with open(self.load_file, 'rb') as f:
-      return pickle.load(f)
+    try:
+      with open(self.chirp_file, 'rb') as f:
+        return pickle.load(f)
+    except EOFError:
+      return dict()
 
   def write_chirps(self):
     """ Handles writing any changes to self.all_chirps data
         to the chirps.txt file.
         Method arguments: n/a
     """
-    with open(self.load_file, 'wb') as f:
+    with open(self.chirp_file, 'wb') as f:
       pickle.dump(self.all_chirps, f)
 
   def get_public(self):
@@ -75,11 +78,11 @@ class ChirpData:
         testing - only set to true during testing
     """
     if private == False:
-      new = Chirp(test, sender_id)
-      self.all_chirps.append(new)
+      new = Chirp(text, sender_id)
+      self.all_chirps[len(self.all_chirps)] = new
     elif private == True:
-      new = PrivateChirp(test, sender_id, receiver_id)
-      self.all_chirps.append(new)
+      new = PrivateChirp(text, sender_id, receiver_id)
+      self.all_chirps[len(self.all_chirps)] = new
     else:
       pass
     if testing == False:
