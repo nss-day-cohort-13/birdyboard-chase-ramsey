@@ -9,12 +9,12 @@ class ChirpData:
 
   def __init__(self, file):
     """ When instantiated, the data saved at chirps.txt (or test_chirps.txt)
-        will be loaded into the private variable _all_chirps
+        will be loaded into the variable all_chirps
         Method arguments
         ================
         file - the file to load chirp data from
     """
-    # _all_chirps = [load from chirps.txt / test_chirps.txt]
+    # self.all_chirps = [load from chirps.txt / test_chirps.txt]
     pass
 
   def load_chirps(self):
@@ -25,7 +25,7 @@ class ChirpData:
     pass
 
   def write_chirps(self):
-    """ Handles writing any changes to _all_chirps data
+    """ Handles writing any changes to self.all_chirps data
         to the chirps.txt file.
         Method arguments: n/a
     """
@@ -47,13 +47,15 @@ class ChirpData:
     """
     pass
 
-  def new_chirp(self, text, username, private=False, testing=False):
+  def new_chirp(self, text, sender_id, private=False, receiver_id=None, testing=False):
     """ Method for creating a new chirp
         Method arguments
         ================
         text - the text of the chirp
-        username - username of the person chirping
+        sender_id - user ID of the person chirping
         private - set to False as default, creates a public chirp;
                   setting private to True will create a private chirp
+        receiver_id - user ID of the receiver (if private)
+        testing - only set to true during testing
     """
     pass

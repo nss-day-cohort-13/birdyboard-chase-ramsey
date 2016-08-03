@@ -11,12 +11,13 @@ class TestChirpLogic(unittest.TestCase):
 
   def test_create_public_chirp(self):
     chirp_text = 'This is the text of a public chirp'
-    self.chirp_data.new_chirp(chirp_text, self.user_data.current_user['username'], testing=True)
-    chirp = dict()
-    chirp['text'] = chirp_text,
-    chirp['username'] = self.user_data.current_user['username'],
-    chirp['chirp_id'] = str(len(self.chirp_data.chirps))
-    chirp['private'] = False
+    self.chirp_data.new_chirp(chirp_text, self.user_data.current_user.username, testing=True)
+    chirp = {
+      text: chirp_text,
+      sender: self.user_data.current_user.username,
+      chirp_id: str(len(self.chirp_data.chirps))
+      private: False
+    }
 
     self.assertTrue(chirp in self.chirp_data.chirps)
 
@@ -26,12 +27,14 @@ class TestChirpLogic(unittest.TestCase):
 
   def test_create_private_chirp(self):
     chirp_text = 'This is the text of a private chirp'
-    self.chirp_data.new_chirp(chirp_text, self.user_data.current_user['username'], private=True, testing=True)
-    chirp = dict()
-    chirp['text'] = chirp_text,
-    chirp['username'] = self.user_data.current_user['username'],
-    chirp['chirp_id'] = str(len(self.chirp_data.chirps))
-    chirp['private'] = True
+    self.chirp_data.new_chirp(chirp_text, self.user_data.current_user.username, private=True, receiver='test_acct2', testing=True)
+    chirp = {
+      text: chirp_text,
+      sender: self.user_data.current_user.username,
+      chirp_id: str(len(self.chirp_data.chirps))
+      private: True,
+      receiver: 'test_acct2'
+    }
 
     self.assertTrue(chirp in self.chirp_data.chirps)
 
@@ -49,33 +52,25 @@ class TestUserLogic(unittest.TestCase):
     self.assertTrue(self.user_data.find_user('test_acct'))
     self.assertFalse(self.user_data.find_user('chase'))
 
-    self.assertTrue(self.user_data.find_user('test_acct', 'test_password'))
-    self.assertFalse(self.user_data.find_user('test_acct', 'wrong_password'))
-    self.assertFalse(self.user_data.find_user('test_acct', ''))
-
   def test_login_sets_correct_current_user(self):
     self.assertEqual(self.user_data.current_user, None)
-    self.user_data.set_current_user('test_acct', 'test_password')
-
-    self.assertEqual(self.user_data.current_user['username'], 'test_acct')
-    self.assertEqual(self.user_data.current_user['password'], 'test_password')
-    self.assertEqual(self.user_data.current_user['user_id'], '00000001')
+    self.user_data.set_current_user('test_acct')
+    self.assertEqual(self.user_data.current_user.username, 'test_acct')
 
     # Clean up
     self.user_data.current_user = None
 
   def test_create_new_user(self):
     self.assertEqual(self.user_data.current_user, None)
-    self.user_data.new_user('new_test', 'new_password', testing=True)
-    new = dict()
-    new['username'] = 'new_test',
-    new['password'] = 'new_password',
-    new['user_id'] = '00000002'
+    self.user_data.new_user('New Test', 'new_test', testing=True)
+    new = {
+      full_name: 'New Test',
+      username: 'new_test'
+    }
     self.assertTrue(new in self.user_data.users)
 
-    self.assertEqual(self.user_data.current_user['username'], 'new_test')
-    self.assertEqual(self.user_data.current_user['password'], 'new_password')
-    self.assertEqual(self.user_data.current_user['user_id'], '00000002')
+    self.assertEqual(self.user_data.current_user.full_name, 'New Test')
+    self.assertEqual(self.user_data.current_user.username, 'new_test')
 
     # Clean up
     self.user_data.current_user = None

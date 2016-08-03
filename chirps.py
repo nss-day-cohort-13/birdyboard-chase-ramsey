@@ -3,17 +3,15 @@ class Chirp:
       objects will be constructed.
   """
 
-  def __init__(self, text, sender, id):
+  def __init__(self, text, sender_id):
     """ On init, a chirp will get the following properties:
         text - the actual text of the chirp
         sender - the user who created the chirp
         number - the unique number ID of the chirp
     """
-    # self.text = text
-    # self.sender = sender
-    # self.id = id
-    pass
-
+    self.text = text
+    self.sender = sender_id
+    self.private = False
 
 class PrivateChirp(Chirp):
   """ The 'PrivateChirp' class inherits all properties from the
@@ -21,10 +19,10 @@ class PrivateChirp(Chirp):
       private chirps.
   """
 
-  def __init__(self, sender, text, id, receiver):
+  def __init__(self, text, sender_id, receiver_id):
     """ On init, a private chirp will get all the properties of a
         public chirp, plus a 'receiver' property.
     """
-    # super().__init__(sender, text, id)
-    # self.receiver = receiver
-    pass
+    super().__init__(text, sender_id)
+    self.private = True
+    self.receiver = receiver_id

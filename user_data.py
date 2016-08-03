@@ -33,34 +33,30 @@ class UserData:
     """
     pass
 
-  def new_user(self, username, password, testing=False):
+  def new_user(self, full_name, username, testing=False):
     """ Creates a new user object from user input, and sets
         new user as current user
         Method arguments
         ================
+        full_name - the user's full name
         username - new unique username chosen by user
-        password - password chosen by user to access profile
     """
     pass
 
-  def find_user(self, *args):
+  def find_user(self, username):
     """ Returns True/False if a user object is found in self.users
-        that matches the search arguments passed in
+        that matches the search argument passed in
         Method arguments
         ================
-        Note: find_user looks up username if only one argument, username and
-              password if two arguments
         username - username associated with the user object being searched for
-        password - password associated with the user object being searched for
     """
     pass
 
-  def set_current_user(self, username, password):
-    """ Searches for user object matching the username and password, and
+  def set_current_user(self, username):
+    """ Searches for user object matching the username, and
         when found, sets that user object as the current user.
         Method arguments
         ================
         username - the username of the profile being searched for
-        passwoard - the password associated with the user profile
     """
     pass
