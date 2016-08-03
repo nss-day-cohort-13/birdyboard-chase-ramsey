@@ -8,4 +8,5 @@ class User:
         full_name - the user's full name
         username - the unique username of each user profile
     """
-    pass
+    self.full_name = full_name
+    self.username = username

@@ -5,19 +5,18 @@ class UserData:
       (or test_users.txt) and opens methods for accessing user data. Also
       includes a current user property that is set to the appropriate user
       object after successful login.
-      Method arguments
-      ================
-      file - the file to load user data from
   """
 
   def __init__(self, file):
     """ Creates a variable called users, loaded from a list
         of users stored in the serialized text file, users.txt
+        Method arguments
+        ================
+        file - the file to load user data from
     """
     # _users = [load from users.txt / test_users.txt]
     self.users = None
     self.current_user = None
-    pass
 
   def load_user_list(self):
     """ Handles loading the serialized list of user data
