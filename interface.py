@@ -7,7 +7,7 @@ class UserInterface:
   """
 
   def __init__(self, chirp_file, user_file):
-    """ On init, this class will get instances of ChripData and
+    """ On init, this class will get instances of ChirpData and
         UserData to run the program
     """
     self.chirp_data = ChirpData(chirp_file)
@@ -64,7 +64,7 @@ class UserInterface:
     else:
       print('What would you like to say?')
       text = input('> ')
-      self.chirp_data.new_chirp(test, self.user_data.current_user)
+      self.chirp_data.new_chirp(text, self.user_data.current_user)
 
   def submit_new_private_chirp(self):
     """ Takes user input and submits it to create a new private chirp
@@ -74,12 +74,12 @@ class UserInterface:
     if login == False:
       return
     else:
-      print('What would you like to say?')
-      text = input('> ')
       print('Who are you sending this chirp to?')
       receiver = input('> ')
+      print('What would you like to say?')
+      text = input('> ')
       receiver_id = self.user_data.find_user(receiver)
-      self.chirp_data.new_chirp(test, self.user_data.current_user, private=True, receiver_id)
+      self.chirp_data.new_chirp(text, self.user_data.current_user, private=True, receiver_id=receiver_id)
 
   def view_all_chirps(self):
     public = self.chirp_data.get_public()
@@ -92,19 +92,21 @@ class UserInterface:
       print('No public chirps yet')
     else:
       for chirp in public:
-        username = self.user_data.users[chirp.sender_id]
+        username = self.user_data.users[chirp.sender_id].username
         i = public.index(chirp) + 1
-        print('{0}. {1}: {2}'.format(i, username, chrip.text))
+        print('{0}. {1}: {2}'.format(i, username, chirp.text))
     print('')
 
     print('')
-    print('##### Private Chrips #####')
+    print('##### Private Chirps #####')
     if len(private) == 0:
       print('No private chirps yet')
-      for chirp in public:
-        username = self.user_data.users[chirp.sender_id]
-        i = public.index(chirp) + 1
-        print('{0}. {1}: {2}'.format(i, username, chrip.text))
+    else:
+      for chirp in private:
+        your_username = self.user_data.users[chirp.sender_id].username
+        their_username = self.user_data.users[chirp.receiver_id].username
+        i = private.index(chirp) + 1
+        print('{0}. {1}: {2}  (sent to {3})'.format(i, your_username, chirp.text, their_username))
       print('')
     print('')
 
@@ -160,5 +162,10 @@ class UserInterface:
 
       self.show_menu()
 
-    else:
-      pass
+    elif choice == '6':
+      print('Are you sure you want to leave? [ y / n ]')
+      choice = input('> ')
+      if choice.lower() == 'y':
+        quit()
+      else:
+        self.show_menu()
