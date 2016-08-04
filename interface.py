@@ -12,6 +12,14 @@ class UserInterface:
     """
     self.chirp_data = ChirpData(chirp_file)
     self.user_data = UserData(user_file)
+    self.menu_data = self.read_menu()
+
+  def read_menu(self):
+    menu_list = list()
+    with open('menu.txt', 'r') as menu:
+      for item in menu:
+        menu_list.append(item)
+    return menu_list
 
   def check_sign_in(self):
     """ Checks to make sure a there is a current user;
@@ -24,6 +32,15 @@ class UserInterface:
     else:
       return True
 
+  def sign_in_user(self):
+    if len(self.user_data.users) == 0:
+      print('There are no users just yet. Be the first! Select "New user" from the main menu.')
+    else:
+      i = 0
+      for uid, user in self.user_data.users:
+        i += 1
+        print('{0}. {1}'.format(i, user.username))
+
   # @check_sign_in
   def submit_new_chirp(self):
     """ Takes user input and submits it to create a new chirp
@@ -33,4 +50,23 @@ class UserInterface:
     if login == False:
       return
     else:
-      print('Got past sign in.')
+      print('What would you like to say?')
+      text = input('> ')
+      self.chirp_data.new_chirp(test, self.user_data.current_user)
+
+  def show_menu(self):
+    """ Shows the main user interface that initiates all of the
+        program's functionality
+        Method arguments: n/a
+    """
+    print('Welcome to Birdyboard!')
+    print('Make a selection from the menu below')
+    print('\n')
+    for item in self.menu_data:
+      i = self.menu_data.index(item) + 1
+      print('{0}. {1}'.format(i, item[:-1]))
+    print('\n')
+    choice = input('> ')
+
+    if choice == '1':
+      self.sign_in_user()

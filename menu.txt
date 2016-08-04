@@ -1,0 +1,6 @@
+Sign in
+New user
+View chirps
+New public chirp
+New private chirp
+Quit
