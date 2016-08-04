@@ -36,14 +36,26 @@ class UserInterface:
     if len(self.user_data.users) == 0:
       print('There are no users just yet. Be the first! Select "New user" from the main menu.')
     else:
-      i = 0
-      for uid, user in self.user_data.users:
-        i += 1
-        print('{0}. {1}'.format(i, user.username))
+      print('')
+      for uid, user in self.user_data.users.items():
+        print(user.username)
+      print('')
+      print('Who are you?')
+      user = input('> ')
+      self.user_data.set_current_user(user)
+      print('')
 
-  # @check_sign_in
-  def submit_new_chirp(self):
-    """ Takes user input and submits it to create a new chirp
+  def create_new_user(self):
+    print('')
+    print('What is your name?')
+    full_name = input ('> ')
+    print('What would you like your username to be?')
+    username = input('> ')
+    self.user_data.new_user(full_name, username)
+    print('')
+
+  def submit_new_public_chirp(self):
+    """ Takes user input and submits it to create a new public chirp
         Method arguments: n/a
     """
     login = self.check_sign_in()
@@ -54,13 +66,74 @@ class UserInterface:
       text = input('> ')
       self.chirp_data.new_chirp(test, self.user_data.current_user)
 
+  def submit_new_private_chirp(self):
+    """ Takes user input and submits it to create a new private chirp
+        Method arguments: n/a
+    """
+    login = self.check_sign_in()
+    if login == False:
+      return
+    else:
+      print('What would you like to say?')
+      text = input('> ')
+      print('Who are you sending this chirp to?')
+      receiver = input('> ')
+      receiver_id = self.user_data.find_user(receiver)
+      self.chirp_data.new_chirp(test, self.user_data.current_user, private=True, receiver_id)
+
+  def view_all_chirps(self):
+    public = self.chirp_data.get_public()
+    private = self.chirp_data.get_private(self.user_data.current_user)
+
+    print('')
+    print('##### Public Chirps #####')
+    print('')
+    if len(public) == 0:
+      print('No public chirps yet')
+    else:
+      for chirp in public:
+        username = self.user_data.users[chirp.sender_id]
+        i = public.index(chirp) + 1
+        print('{0}. {1}: {2}'.format(i, username, chrip.text))
+    print('')
+
+    print('')
+    print('##### Private Chrips #####')
+    if len(private) == 0:
+      print('No private chirps yet')
+      for chirp in public:
+        username = self.user_data.users[chirp.sender_id]
+        i = public.index(chirp) + 1
+        print('{0}. {1}: {2}'.format(i, username, chrip.text))
+      print('')
+    print('')
+
+    print('Enter "public / private" plus the number of a chirp to reply (i.e. "public 2"), or type "back" to go back to the main menu.')
+
+    choice = input('> ')
+    if choice.lower() == 'back':
+      self.show_menu()
+    else:
+      choice = choice.split(' ')
+      num = int(choice[1]) - 1
+      if choice[0].lower() == 'public':
+        print(public[num].text)
+      elif choice[0].lower() == 'private':
+        print(private[num].text)
+
   def show_menu(self):
     """ Shows the main user interface that initiates all of the
         program's functionality
         Method arguments: n/a
     """
-    print('Welcome to Birdyboard!')
-    print('Make a selection from the menu below')
+    if self.user_data.current_user == None:
+      print('Welcome to Birdyboard!')
+      print('Make a selection from the menu below')
+    else:
+      first_name = self.user_data.users[self.user_data.current_user].full_name.split(' ')
+      first_name = first_name[:1]
+      username = self.user_data.users[self.user_data.current_user].username
+      print('Hi {0}! You\'re signed in as {1}'.format(first_name[0], username))
     print('\n')
     for item in self.menu_data:
       i = self.menu_data.index(item) + 1
@@ -68,5 +141,24 @@ class UserInterface:
     print('\n')
     choice = input('> ')
 
-    if choice == '1':
-      self.sign_in_user()
+    if choice != '6':
+
+      if choice == '1':
+        self.sign_in_user()
+
+      elif choice == '2':
+        self.create_new_user()
+
+      elif choice == '3':
+        self.view_all_chirps()
+
+      elif choice == '4':
+        self.submit_new_public_chirp()
+
+      elif choice == '5':
+        self.submit_new_private_chirp()
+
+      self.show_menu()
+
+    else:
+      pass
